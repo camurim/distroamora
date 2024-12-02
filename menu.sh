@@ -44,6 +44,5 @@ function show_progress() {
 function installPrerequisites() {
 	[[ $(dpkg -s whiptail >/dev/null 2>&1) -ne 0 ]] && apt-get install whiptail -y
 	[[ $(dpkg -s gawk >/dev/null 2>&1) -ne 0 ]] && apt-get install gawk -y
-	[[ $(dpkg -s postgresql-13 >/dev/null 2>&1) -ne 0 ]] && apt-get install postgresql-13 -y
 	[[ $(dpkg -s libreoffice >/dev/null 2>&1) -ne 0 ]] && apt-get install libreoffice --no-install-recommends -y
 }
