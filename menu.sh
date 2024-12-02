@@ -46,3 +46,9 @@ function installPrerequisites() {
 	[[ $(dpkg -s gawk >/dev/null 2>&1) -ne 0 ]] && apt-get install gawk -y
 	[[ $(dpkg -s libreoffice >/dev/null 2>&1) -ne 0 ]] && apt-get install libreoffice --no-install-recommends -y
 }
+
+##--------------------------------------------------------------------------------------
+## Instalar pré-requisitos
+##
+
+installPrerequisites
