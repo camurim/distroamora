@@ -85,7 +85,7 @@ function installFonts() {
 ## Instalar ferramentas de desenvolvimento
 ##
 
-function installdevTools() {
+function installDevTools() {
 	[[ $(dpkg -s build-essential >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install build-essential -y
 	[[ $(dpkg -s fakeroot >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install fakeroot -y
 	[[ $(dpkg -s devscripts >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install devscripts -y
@@ -110,6 +110,7 @@ function installdevTools() {
 ##
 
 function installUtils() {
+	[[ $(dpkg -s alacritty >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install alacritty -y
 	[[ $(dpkg -s keepassxc >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install keepassxc -y
 	[[ $(dpkg -s inotify-tools >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install inotify-tools -y
 	[[ $(dpkg -s lolcat >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install lolcat -y
@@ -163,6 +164,17 @@ function installQtile() {
 
 	pipx install qtile
 	pipx inject qtile dbus-next psutil
+}
+
+##--------------------------------------------------------------------------------------
+## Instalar Fish Shell
+##
+
+function installFishShell() {
+	echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+	curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg >/dev/null
+	sudo apt update
+	sudo apt install fish
 }
 
 ##--------------------------------------------------------------------------------------
