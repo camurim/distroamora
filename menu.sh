@@ -72,6 +72,15 @@ function installPrerequisites() {
 	[[ $(dpkg -s libreoffice >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install libreoffice --no-install-recommends -y
 }
 
+##------------------------------------------------------------------------------------
+## Instalar Fontes
+##
+
+function installFonts() {
+	[[ $(dpkg -s powerline >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install powerline -y
+	[[ $(dpkg -s fonts-powerline >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install fonts-powerline -y
+}
+
 ##--------------------------------------------------------------------------------------
 ## Instalar ferramentas de desenvolvimento
 ##
