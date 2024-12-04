@@ -133,7 +133,6 @@ function installUtils() {
 	[[ $(dpkg -s prettyping >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install prettyping -y
 	[[ $(dpkg -s nala >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install nala -y
 	[[ $(dpkg -s htop >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install htop -y
-	[[ $(dpkg -s btop >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install btop -y
 	[[ $(dpkg -s rofi >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install rofi -y
 	[[ $(dpkg -s newsboat >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install newsboat -y
 	[[ $(dpkg -s pulsemixer >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install pulsemixer -y
@@ -160,10 +159,11 @@ function installQtile() {
 	cd "$HOME"/src/picom || return 1
 	meson setup --buildtype=release build
 	ninja -C build
-	sudo cp build/src/picom /usr/local/bin
+	ninja -C build install
 
 	pipx install qtile
 	pipx inject qtile dbus-next psutil
+	pipx inject qtile qtile-extras
 }
 
 ##--------------------------------------------------------------------------------------
