@@ -69,6 +69,9 @@ function installPrerequisites() {
 	[[ $(dpkg -s curl >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install curl -y
 	[[ $(dpkg -s rclone >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install rclone -y
 	[[ $(dpkg -s gawk >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install gawk -y
+	[[ $(dpkg -s temurin-8-jdk >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install temurin-8-jdk -y
+	[[ $(dpkg -s temurin-17-jdk >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install temurin-17-jdk -y
+	[[ $(dpkg -s temurin-23-jdk >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install temurin-23-jdk -y
 	[[ $(dpkg -s libreoffice >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install libreoffice --no-install-recommends -y
 }
 
@@ -142,6 +145,7 @@ function installUtils() {
 	[[ $(dpkg -s trash-cli >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install trash-cli -y
 	[[ $(dpkg -s calcurse >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install calcurse -y
 	[[ $(dpkg -s fzf >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install fzf -y
+	[[ $(dpkg -s f3 >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install f3 -y
 	[[ $(dpkg -s filezilla >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install filezilla -y
 }
 
