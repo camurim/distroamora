@@ -145,7 +145,15 @@ function installUtils() {
 	[[ $(dpkg -s trash-cli >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install trash-cli -y
 	[[ $(dpkg -s calcurse >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install calcurse -y
 	[[ $(dpkg -s fzf >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install fzf -y
+	[[ $(dpkg -s fd-find >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install fd-find -y
 	[[ $(dpkg -s f3 >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install f3 -y
+	[[ $(dpkg -s ripgrep >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install ripgrep -y
+	[[ $(dpkg -s duf >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install duf -y
+	[[ $(dpkg -s unclutter >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install unclutter -y
+	[[ $(dpkg -s numlockx >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install numlockx -y
+	[[ $(dpkg -s xss-lock >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install xss-lock -y
+	[[ $(dpkg -s xclip >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install xclip -y
+	[[ $(dpkg -s x11-apps >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install x11-apps -y
 	[[ $(dpkg -s filezilla >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install filezilla -y
 }
 
@@ -166,8 +174,7 @@ function installQtile() {
 	ninja -C build install
 
 	pipx install qtile
-	pipx inject qtile dbus-next psutil
-	pipx inject qtile qtile-extras
+	pipx inject qtile dbus-next psutil qtile-extras
 }
 
 ##--------------------------------------------------------------------------------------
