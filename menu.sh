@@ -6,6 +6,14 @@
 
 TMP=${TMP:-/tmp}
 
+#-------------------------------------------------------------------------------------
+# Autentica o SUDO
+#
+
+if [ "$(id -u)" -ne 0 ]; then
+	sudo echo -n
+fi
+
 ##------------------------------------------------------------------------------------
 ## Função para barra de progresso
 ##
@@ -103,6 +111,7 @@ function installDevTools() {
 	[[ $(dpkg -s neovim >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install neovim -y
 	[[ $(dpkg -s git >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install git -y
 	[[ $(dpkg -s gh >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install gh -y
+	[[ $(dpkg -s binwalk >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install binwalk -y
 	[[ $(dpkg -s python3-all >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install python3-all -y
 	python3 -m ensurepip --upgrade
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -155,6 +164,35 @@ function installUtils() {
 	[[ $(dpkg -s xclip >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install xclip -y
 	[[ $(dpkg -s x11-apps >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install x11-apps -y
 	[[ $(dpkg -s filezilla >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install filezilla -y
+	[[ $(dpkg -s kcolorchooser >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install kcolorchooser -y
+	[[ $(dpkg -s kronometer >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install kronometer -y
+	[[ $(dpkg -s rar >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install rar -y
+	[[ $(dpkg -s unrar >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install unrar -y
+	[[ $(dpkg -s nmap >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install nmap -y
+	[[ $(dpkg -s obs-studio >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install obs-studio -y
+	[[ $(dpkg -s psensor >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install psensor -y
+}
+
+##--------------------------------------------------------------------------------------
+## Instalar utilitários
+##
+
+function installAccessories() {
+	[[ $(dpkg -s gnome-screensaver >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install gnome-screensaver -y
+	[[ $(dpkg -s gnome-bluetooth >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install gnome-bluetooth -y
+	[[ $(dpkg -s cava >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install cava -y
+	[[ $(dpkg -s screenkey >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install screenkey -y
+}
+
+##--------------------------------------------------------------------------------------
+## Instalar software científico e especializado
+##
+
+function installScientificSoftware() {
+	[[ $(dpkg -s kikad >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install kicad -y
+	[[ $(dpkg -s logisim >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install logisim -y
+	[[ $(dpkg -s simulide >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install simulide -y
+	[[ $(dpkg -s glogic >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install glogic -y
 }
 
 ##--------------------------------------------------------------------------------------
@@ -171,7 +209,7 @@ function installQtile() {
 	cd "$HOME"/src/picom || return 1
 	meson setup --buildtype=release build
 	ninja -C build
-	ninja -C build install
+	sudo ninja -C build install
 
 	pipx install qtile
 	pipx inject qtile dbus-next psutil qtile-extras
