@@ -39,6 +39,7 @@ function configUserDirectories() {
 ##
 
 function installPrerequisites() {
+	# Usa o "retrovisor" do sed (\1 = primeiro grupo) para fazer referência a tudo capturado pelo grupo
 	sed -r -i 's/^deb(.*)$/deb\1 non-free-firmware contrib/g' /etc/apt/sources.list
 	sudo apt-get update -y
 	sudo apt-get upgrade -y
