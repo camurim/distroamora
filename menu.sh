@@ -15,37 +15,6 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 ##------------------------------------------------------------------------------------
-## Função para barra de progresso
-##
-
-bar_size=40
-bar_char_done="#"
-bar_char_todo="-"
-bar_percentage_scale=2
-
-function show_progress() {
-	current="$1"
-	total="$2"
-
-	# calculate the progress in percentage
-	percent=$(bc <<<"scale=$bar_percentage_scale; 100 * $current / $total")
-	# The number of done and todo characters
-	done=$(bc <<<"scale=0; $bar_size * $percent / 100")
-	todo=$(bc <<<"scale=0; $bar_size - $done")
-
-	# build the done and todo sub-bars
-	done_sub_bar=$(printf "%${done}s" | tr " " "${bar_char_done}")
-	todo_sub_bar=$(printf "%${todo}s" | tr " " "${bar_char_todo}")
-
-	# output the bar
-	echo -ne "\rProgress : [${done_sub_bar}${todo_sub_bar}] ${percent}%"
-
-	if [ "$total" -eq "$current" ]; then
-		echo -e "\nDONE"
-	fi
-}
-
-##------------------------------------------------------------------------------------
 ## Configuração inicial de diretórios
 ##
 
@@ -87,7 +56,7 @@ function installPrerequisites() {
 ## Instalar Fontes
 ##
 
-function installFonts() {
+function installPlFonts() {
 	[[ $(dpkg -s powerline >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install powerline -y
 	[[ $(dpkg -s fonts-powerline >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install fonts-powerline -y
 }
@@ -123,10 +92,10 @@ function installDevTools() {
 
 function installUtils() {
 	[[ $(dpkg -s alacritty >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install alacritty -y
+	[[ $(dpkg -s kitty >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install kitty -y
 	[[ $(dpkg -s keepassxc >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install keepassxc -y
 	[[ $(dpkg -s inotify-tools >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install inotify-tools -y
 	[[ $(dpkg -s lolcat >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install lolcat -y
-	[[ $(dpkg -s kitty >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install kitty -y
 	[[ $(dpkg -s zenity >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install zenity -y
 	[[ $(dpkg -s scrot >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install scrot -y
 	[[ $(dpkg -s flameshot >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install flameshot -y
@@ -188,11 +157,24 @@ function installAccessories() {
 ## Instalar software científico e especializado
 ##
 
-function installScientificSoftware() {
+function installTechSciSoftware() {
 	[[ $(dpkg -s kikad >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install kicad -y
 	[[ $(dpkg -s logisim >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install logisim -y
 	[[ $(dpkg -s simulide >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install simulide -y
 	[[ $(dpkg -s glogic >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install glogic -y
+}
+
+##--------------------------------------------------------------------------------------
+## Instalar Fish Shell
+##
+
+function installFishShell() {
+	if ! which fish; then
+		echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
+		curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg >/dev/null
+		sudo apt update
+		sudo apt install fish -y
+	fi
 }
 
 ##--------------------------------------------------------------------------------------
@@ -236,25 +218,53 @@ function installDotFiles() {
 }
 
 ##--------------------------------------------------------------------------------------
-## Instalar Fish Shell
-##
-
-function installFishShell() {
-	if ! which fish; then
-		echo 'deb http://download.opensuse.org/repositories/shells:/fish:/release:/3/Debian_12/ /' | sudo tee /etc/apt/sources.list.d/shells:fish:release:3.list
-		curl -fsSL https://download.opensuse.org/repositories/shells:fish:release:3/Debian_12/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/shells_fish_release_3.gpg >/dev/null
-		sudo apt update
-		sudo apt install fish -y
-	fi
-}
-
-##--------------------------------------------------------------------------------------
 ## Menu principal
 ##
 
+# Os pré-requisitos precisam ser instalados compulsoriamente
 installPrerequisites
+
+## Tela inicial
+
+export TERM=ansi
+title="Instalação do DistroAmora"
+
+if ! whiptail --title "$title" --yesno "Este programa irá instalar os pacotes necessários para o DistroAmora. \
+	Todo o proceso deve demorar vários minutos. Deseja continuar?" 10 78; then
+	echo "Até a próxima!"
+	exit 1
+fi
+
+## Selecionar as opções
+
+result=$(
+	whiptail --title "$title" --checklist \
+		"Selecione os pacotes que deseja instalar:" 20 78 9 \
+		"CREATE_DIRS" "Criar estrutura de diretórios padrão." ON \
+		"INSTALL_PL_FONTS" "Instalar fontes PowerLine." ON \
+		"INSTALL_DEV_TOOL" "Instalar ferramentas de desenvolvimento." ON \
+		"INSTALL_UTILITIES" "Instalar utilitários." ON \
+		"INSTALL_ACCESSORIES" "Instalar acessórios." ON \
+		"INSTALL_QTILE" "Instalar o Qtile." ON \
+		"INSTALL_FISH_SHELL" "Instalar o Fish Shell." ON \
+		"INSTALL_DOT_FILES" "Instalar os 'dot-files' padrões." ON \
+		"INSTALL_TECH_SCI_SOFTWARE" "Instalar softwares técnicos ou científicos." ON \
+		3>&2 2>&1 1>&3
+)
+
+if [ -z "$result" ]; then
+	echo "Até a próxima!"
+	exit 1
+fi
+
+IFS=' ' read -ra arraymenu <<<"$result"
+
 installdevTools
 
 ##--------------------------------------------------------------------------------------
+## Cria diretórios do usuário
 ##
-##
+
+if [[ "${arraymenu[*]}" =~ 'CREATE_DIRS' ]]; then
+	configUserDirectories
+fi
