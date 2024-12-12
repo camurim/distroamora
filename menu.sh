@@ -216,6 +216,26 @@ function installQtile() {
 }
 
 ##--------------------------------------------------------------------------------------
+## Install config files
+##
+
+function installDotFiles() {
+	if ! which git; then
+		return 0
+	fi
+
+	[[ ! -d "$HOME"/src/ ]] && mkdir -p "$HOME"/src
+	git clone https://github.com/camurim/my-dotfiles.git "$HOME"/src
+
+	cp -r "$HOME"/src/my-dotfiles/.config/* "$HOME"/.config/
+	cp -r "$HOME"/src/my-dotfiles/.local/* "$HOME"/.local/
+	cp -r "$HOME"/src/my-dotfiles/.dosbox "$HOME"/
+	cp -r "$HOME"/src/my-dotfiles/.SpaceVim.d "$HOME"/
+	cp -r "$HOME"/src/my-dotfiles/.bash_aliases "$HOME"/
+	cp -r "$HOME"/src/my-dotfiles/.bashrc "$HOME"/
+}
+
+##--------------------------------------------------------------------------------------
 ## Instalar Fish Shell
 ##
 
@@ -229,7 +249,7 @@ function installFishShell() {
 }
 
 ##--------------------------------------------------------------------------------------
-## Instalação
+## Menu principal
 ##
 
 installPrerequisites
