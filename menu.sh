@@ -50,6 +50,24 @@ function installPrerequisites() {
 	[[ $(dpkg -s temurin-17-jdk >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install temurin-17-jdk -y
 	[[ $(dpkg -s temurin-23-jdk >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install temurin-23-jdk -y
 	[[ $(dpkg -s libreoffice >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install libreoffice --no-install-recommends -y
+	[[ $(dpkg -s ttf-mscorefonts-installer 2>/dev/null 2>&1) -ne 0 ]] && sudo apt-get install ttf-mscorefonts-installer -y
+}
+
+##------------------------------------------------------------------------------------
+## Instalar bibliotecas
+##
+
+function installLibraries() {
+	sudo apt install libx11-dev libx11-xcb-dev libxext6 libxmu-dev libxmuu-dev libxext-dev libxcb1-dev libxcb-damage0-dev -y
+	sudo apt install libxcb-dpms0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev -y
+	sudo apt install libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-glx0-dev libpixman-1-dev -y
+	sudo apt install libdbus-1-dev libconfig-dev libgl-dev libegl-dev libpcre2-dev libevdev-dev uthash-dev libev-dev libx11-xcb-dev -y
+	sudo apt install libicu-dev libncurses-dev libgmp-dev zlib1g-dev libperl-dev libedit-dev libpam0g-dev libpam-dev libkrb5-dev -y
+	sudo apt install libldap2-dev libxslt1-dev libossp-uuid-dev bison flex opensp tcl-dev xsltproc install libperl-dev libedit-dev -y
+	sudo apt install libpam0g-dev libpam-dev libkrb5-dev libldap2-dev libxslt1-dev libossp-uuid-dev bison flex opensp tcl-dev xsltproc -y
+	sudo apt install dpkg-dev docbook-dsssl docbook libreadline-dev libasound2-dev libasound2 libalsaplayer-dev sdl2 sdl2_image -y
+	sudo apt install libsdl2-image-dev gcc-multilib bsdtar libarchive-tools patchelf rpm2cpio lib32ncurses-dev libasound2-dev -y
+	sudo apt install libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev -y
 }
 
 ##------------------------------------------------------------------------------------
@@ -90,7 +108,7 @@ function installDevTools() {
 ## Instalar utilitários
 ##
 
-function installUtils() {
+function installUtilities() {
 	[[ $(dpkg -s alacritty >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install alacritty -y
 	[[ $(dpkg -s kitty >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install kitty -y
 	[[ $(dpkg -s keepassxc >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install keepassxc -y
@@ -242,6 +260,7 @@ result=$(
 		"Selecione os pacotes que deseja instalar:" 20 78 9 \
 		"CREATE_DIRS" "Criar estrutura de diretórios padrão." ON \
 		"INSTALL_PL_FONTS" "Instalar fontes PowerLine." ON \
+		"INSTALL_LIBRARIES" "Instalar bibliotecas." ON \
 		"INSTALL_DEV_TOOL" "Instalar ferramentas de desenvolvimento." ON \
 		"INSTALL_UTILITIES" "Instalar utilitários." ON \
 		"INSTALL_ACCESSORIES" "Instalar acessórios." ON \
@@ -267,4 +286,76 @@ installdevTools
 
 if [[ "${arraymenu[*]}" =~ 'CREATE_DIRS' ]]; then
 	configUserDirectories
+fi
+
+##--------------------------------------------------------------------------------------
+## Cria diretórios do usuário
+##
+
+if [[ "${arraymenu[*]}" =~ 'INSTALL_PL_FONTS' ]]; then
+	installPlFonts
+fi
+
+##--------------------------------------------------------------------------------------
+## Instala bibliotecas
+##
+
+if [[ "${arraymenu[*]}" =~ 'INSTALL_LIBRARIES' ]]; then
+	installLibraries
+fi
+
+##--------------------------------------------------------------------------------------
+## Cria diretórios do usuário
+##
+
+if [[ "${arraymenu[*]}" =~ 'INSTALL_DEV_TOOL' ]]; then
+	installDevTools
+fi
+
+##--------------------------------------------------------------------------------------
+## Cria diretórios do usuário
+##
+
+if [[ "${arraymenu[*]}" =~ 'INSTALL_UTILITIES' ]]; then
+	installUtilities
+fi
+
+##--------------------------------------------------------------------------------------
+## Cria diretórios do usuário
+##
+
+if [[ "${arraymenu[*]}" =~ 'INSTALL_ACCESSORIES' ]]; then
+	installAccessories
+fi
+
+##--------------------------------------------------------------------------------------
+## Cria diretórios do usuário
+##
+
+if [[ "${arraymenu[*]}" =~ 'INSTALL_QTILE' ]]; then
+	installQtile
+fi
+
+##--------------------------------------------------------------------------------------
+## Cria diretórios do usuário
+##
+
+if [[ "${arraymenu[*]}" =~ 'INSTALL_FISH_SHELL' ]]; then
+	installFishShell
+fi
+
+##--------------------------------------------------------------------------------------
+## Cria diretórios do usuário
+##
+
+if [[ "${arraymenu[*]}" =~ 'INSTALL_DOT_FILES' ]]; then
+	installDotFiles
+fi
+
+##--------------------------------------------------------------------------------------
+## Cria diretórios do usuário
+##
+
+if [[ "${arraymenu[*]}" =~ 'INSTALL_TECH_SCI_SOFTWARE' ]]; then
+	installTechSciSoftware
 fi
