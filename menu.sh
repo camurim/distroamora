@@ -39,6 +39,7 @@ function configUserDirectories() {
 ##
 
 function installPrerequisites() {
+	sed -r -i 's/^deb(.*)$/deb\1 non-free-firmware contrib/g' /etc/apt/sources.list
 	sudo apt-get update -y
 	sudo apt-get upgrade -y
 	[[ $(dpkg -s whiptail >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install whiptail -y
