@@ -39,8 +39,10 @@ function configUserDirectories() {
 ##
 
 function installPrerequisites() {
-	# Usa o "retrovisor" do sed (\1 = primeiro grupo) para fazer referência a tudo capturado pelo grupo
-	sed -r -i 's/^deb(.*)$/deb\1 non-free-firmware contrib/g' /etc/apt/sources.list
+	if ! grep -q '.*contrib$'; then
+		# Usa o "retrovisor" do sed (\1 = primeiro grupo) para fazer referência a tudo capturado pelo grupo
+		sed -r -i 's/^deb(.*)$/deb\1 non-free non-free-firmware contrib/g' /etc/apt/sources.list
+	fi
 	sudo apt-get update -y
 	sudo apt-get upgrade -y
 	[[ $(dpkg -s whiptail >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install whiptail -y
@@ -218,6 +220,15 @@ function installQtile() {
 }
 
 ##--------------------------------------------------------------------------------------
+## Instalar driver da placa NVidia
+##
+
+function installNvidiaDriver() {
+	[[ $(dpkg -s nvidia-driver >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install nvidia-driver -y
+}
+
+
+##--------------------------------------------------------------------------------------
 ## Install config files
 ##
 
@@ -270,6 +281,7 @@ result=$(
 		"INSTALL_FISH_SHELL" "Instalar o Fish Shell." ON \
 		"INSTALL_DOT_FILES" "Instalar os 'dot-files' padrões." ON \
 		"INSTALL_TECH_SCI_SOFTWARE" "Instalar softwares técnicos ou científicos." ON \
+		"INSTALL_NVIDIA_DRIVER" "Instalar drivers da GPU NVidia." ON \
 		3>&2 2>&1 1>&3
 )
 
@@ -277,7 +289,7 @@ if [ -z "$result" ]; then
 	echo "Até a próxima!"
 	exit 1
 fi
-
+j
 IFS=' ' read -ra arraymenu <<<"$result"
 
 installdevTools
@@ -307,7 +319,7 @@ if [[ "${arraymenu[*]}" =~ 'INSTALL_LIBRARIES' ]]; then
 fi
 
 ##--------------------------------------------------------------------------------------
-## Cria diretórios do usuário
+## Instalar ferramentas de desenvolvimento
 ##
 
 if [[ "${arraymenu[*]}" =~ 'INSTALL_DEV_TOOL' ]]; then
@@ -315,7 +327,7 @@ if [[ "${arraymenu[*]}" =~ 'INSTALL_DEV_TOOL' ]]; then
 fi
 
 ##--------------------------------------------------------------------------------------
-## Cria diretórios do usuário
+## Instalar utilitários
 ##
 
 if [[ "${arraymenu[*]}" =~ 'INSTALL_UTILITIES' ]]; then
@@ -323,7 +335,7 @@ if [[ "${arraymenu[*]}" =~ 'INSTALL_UTILITIES' ]]; then
 fi
 
 ##--------------------------------------------------------------------------------------
-## Cria diretórios do usuário
+## Instalar acessórios
 ##
 
 if [[ "${arraymenu[*]}" =~ 'INSTALL_ACCESSORIES' ]]; then
@@ -331,7 +343,7 @@ if [[ "${arraymenu[*]}" =~ 'INSTALL_ACCESSORIES' ]]; then
 fi
 
 ##--------------------------------------------------------------------------------------
-## Cria diretórios do usuário
+## Instalar o QTIle
 ##
 
 if [[ "${arraymenu[*]}" =~ 'INSTALL_QTILE' ]]; then
@@ -339,7 +351,7 @@ if [[ "${arraymenu[*]}" =~ 'INSTALL_QTILE' ]]; then
 fi
 
 ##--------------------------------------------------------------------------------------
-## Cria diretórios do usuário
+## Instalar o Fish Shell
 ##
 
 if [[ "${arraymenu[*]}" =~ 'INSTALL_FISH_SHELL' ]]; then
@@ -347,7 +359,7 @@ if [[ "${arraymenu[*]}" =~ 'INSTALL_FISH_SHELL' ]]; then
 fi
 
 ##--------------------------------------------------------------------------------------
-## Cria diretórios do usuário
+## Instalar os arquivos de configuração padrão
 ##
 
 if [[ "${arraymenu[*]}" =~ 'INSTALL_DOT_FILES' ]]; then
@@ -355,9 +367,19 @@ if [[ "${arraymenu[*]}" =~ 'INSTALL_DOT_FILES' ]]; then
 fi
 
 ##--------------------------------------------------------------------------------------
-## Cria diretórios do usuário
+## Instalar softwares técnicos e científicos
 ##
 
 if [[ "${arraymenu[*]}" =~ 'INSTALL_TECH_SCI_SOFTWARE' ]]; then
 	installTechSciSoftware
 fi
+
+##--------------------------------------------------------------------------------------
+## Instalar Drivers da GPU NVidia
+##
+
+if [[ "${arraymenu[*]}" =~ 'INSTALL_NVIDIA_DRIVER' ]]; then
+	installNvidiaDriver
+fi
+
+
