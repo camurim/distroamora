@@ -106,7 +106,10 @@ function installDevTools() {
 	[[ $(dpkg -s binwalk >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install binwalk -y
 	[[ $(dpkg -s python3-all >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install python3-all -y
 	[[ $(dpkg -s python3-pip >/dev/null 2>&1) -ne 0 ]] && sudo apt-get install python3-pip -y
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	
+	if [ ! -f "$HOME"/.cargo/bin/cargo ]; then
+		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	fi
 }
 
 ##--------------------------------------------------------------------------------------
