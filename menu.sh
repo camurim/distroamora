@@ -27,9 +27,9 @@ function configUserDirectories() {
 
 	# Diretórios do Google Driver
 	[[ ! -d "$HOME"/Documentos/docs ]] && ln -s "$HOME"/google-drive/docs "$HOME"/Documentos/docs
-	[[ ! -d "$HOME"/Documentos/docs-archive ]] && ln -s "$HOME"/google-drive/docs-archive "$HOME"/Documentos/docs
-	[[ ! -d "$HOME"/Documentos/LTS ]] && ln -s "$HOME"/google-drive/LTS "$HOME"/Documentos/docs
-	[[ ! -d "$HOME"/Documentos/projects ]] && ln -s "$HOME"/google-drive/projects "$HOME"/Documentos/docs
+	[[ ! -d "$HOME"/Documentos/docs-archive ]] && ln -s "$HOME"/google-drive/docs-archive "$HOME"/Documentos/docs-archive
+	[[ ! -d "$HOME"/Documentos/LTS ]] && ln -s "$HOME"/google-drive/LTS "$HOME"/Documentos/LTS
+	[[ ! -d "$HOME"/Documentos/projects ]] && ln -s "$HOME"/google-drive/projects "$HOME"/Documentos/projects
 	[[ ! -d "$HOME"/keyring ]] && ln -s "$HOME"/google-drive/keyring "$HOME"/keyring
 	[[ ! -d "$HOME"/scripts ]] && ln -s "$HOME"/google-drive/scripts "$HOME"/scripts
 }
