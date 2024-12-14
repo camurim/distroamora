@@ -270,118 +270,120 @@ if ! whiptail --title "$title" --yesno "Este programa irá instalar os pacotes n
 	exit 1
 fi
 
-## Selecionar as opções
+while true 
+do
+	## Selecionar as opções
 
-result=$(
-	whiptail --title "$title" --checklist \
-		"Selecione os pacotes que deseja instalar:" 20 78 9 \
-		"CREATE_DIRS" "Criar estrutura de diretórios padrão." ON \
-		"INSTALL_PL_FONTS" "Instalar fontes PowerLine." ON \
-		"INSTALL_LIBRARIES" "Instalar bibliotecas." ON \
-		"INSTALL_DEV_TOOL" "Instalar ferramentas de desenvolvimento." ON \
-		"INSTALL_UTILITIES" "Instalar utilitários." ON \
-		"INSTALL_ACCESSORIES" "Instalar acessórios." ON \
-		"INSTALL_QTILE" "Instalar o Qtile." ON \
-		"INSTALL_FISH_SHELL" "Instalar o Fish Shell." ON \
-		"INSTALL_DOT_FILES" "Instalar os 'dot-files' padrões." ON \
-		"INSTALL_TECH_SCI_SOFTWARE" "Instalar softwares técnicos ou científicos." ON \
-		"INSTALL_NVIDIA_DRIVER" "Instalar drivers da GPU NVidia." ON \
-		3>&2 2>&1 1>&3
-)
+	result=$(
+		whiptail --title "$title" --checklist \
+			"Selecione os pacotes que deseja instalar:" 20 78 9 \
+			"CREATE_DIRS" "Criar estrutura de diretórios padrão." ON \
+			"INSTALL_PL_FONTS" "Instalar fontes PowerLine." ON \
+			"INSTALL_LIBRARIES" "Instalar bibliotecas." ON \
+			"INSTALL_DEV_TOOL" "Instalar ferramentas de desenvolvimento." ON \
+			"INSTALL_UTILITIES" "Instalar utilitários." ON \
+			"INSTALL_ACCESSORIES" "Instalar acessórios." ON \
+			"INSTALL_QTILE" "Instalar o Qtile." ON \
+			"INSTALL_FISH_SHELL" "Instalar o Fish Shell." ON \
+			"INSTALL_DOT_FILES" "Instalar os 'dot-files' padrões." ON \
+			"INSTALL_TECH_SCI_SOFTWARE" "Instalar softwares técnicos ou científicos." ON \
+			"INSTALL_NVIDIA_DRIVER" "Instalar drivers da GPU NVidia." ON \
+			3>&2 2>&1 1>&3
+	)
 
-if [ -z "$result" ]; then
-	echo "Até a próxima!"
-	exit 1
-fi
+	if [ -z "$result" ]; then
+		echo "Até a próxima!"
+		exit 1
+	fi
 
-IFS=' ' read -ra arraymenu <<<"$result"
+	IFS=' ' read -ra arraymenu <<<"$result"
 
-##--------------------------------------------------------------------------------------
-## Cria diretórios do usuário
-##
+	##--------------------------------------------------------------------------------------
+	## Cria diretórios do usuário
+	##
 
-if [[ "${arraymenu[*]}" =~ 'CREATE_DIRS' ]]; then
-	configUserDirectories
-fi
+	if [[ "${arraymenu[*]}" =~ 'CREATE_DIRS' ]]; then
+		configUserDirectories
+	fi
 
-##--------------------------------------------------------------------------------------
-## Cria diretórios do usuário
-##
+	##--------------------------------------------------------------------------------------
+	## Cria diretórios do usuário
+	##
 
-if [[ "${arraymenu[*]}" =~ 'INSTALL_PL_FONTS' ]]; then
-	installPlFonts
-fi
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_PL_FONTS' ]]; then
+		installPlFonts
+	fi
 
-##--------------------------------------------------------------------------------------
-## Instala bibliotecas
-##
+	##--------------------------------------------------------------------------------------
+	## Instala bibliotecas
+	##
 
-if [[ "${arraymenu[*]}" =~ 'INSTALL_LIBRARIES' ]]; then
-	installLibraries
-fi
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_LIBRARIES' ]]; then
+		installLibraries
+	fi
 
-##--------------------------------------------------------------------------------------
-## Instalar ferramentas de desenvolvimento
-##
+	##--------------------------------------------------------------------------------------
+	## Instalar ferramentas de desenvolvimento
+	##
 
-if [[ "${arraymenu[*]}" =~ 'INSTALL_DEV_TOOL' ]]; then
-	installDevTools
-fi
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_DEV_TOOL' ]]; then
+		installDevTools
+	fi
 
-##--------------------------------------------------------------------------------------
-## Instalar utilitários
-##
+	##--------------------------------------------------------------------------------------
+	## Instalar utilitários
+	##
 
-if [[ "${arraymenu[*]}" =~ 'INSTALL_UTILITIES' ]]; then
-	installUtilities
-fi
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_UTILITIES' ]]; then
+		installUtilities
+	fi
 
-##--------------------------------------------------------------------------------------
-## Instalar acessórios
-##
+	##--------------------------------------------------------------------------------------
+	## Instalar acessórios
+	##
 
-if [[ "${arraymenu[*]}" =~ 'INSTALL_ACCESSORIES' ]]; then
-	installAccessories
-fi
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_ACCESSORIES' ]]; then
+		installAccessories
+	fi
 
-##--------------------------------------------------------------------------------------
-## Instalar o QTIle
-##
+	##--------------------------------------------------------------------------------------
+	## Instalar o QTIle
+	##
 
-if [[ "${arraymenu[*]}" =~ 'INSTALL_QTILE' ]]; then
-	installQtile
-fi
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_QTILE' ]]; then
+		installQtile
+	fi
 
-##--------------------------------------------------------------------------------------
-## Instalar o Fish Shell
-##
+	##--------------------------------------------------------------------------------------
+	## Instalar o Fish Shell
+	##
 
-if [[ "${arraymenu[*]}" =~ 'INSTALL_FISH_SHELL' ]]; then
-	installFishShell
-fi
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_FISH_SHELL' ]]; then
+		installFishShell
+	fi
 
-##--------------------------------------------------------------------------------------
-## Instalar os arquivos de configuração padrão
-##
+	##--------------------------------------------------------------------------------------
+	## Instalar os arquivos de configuração padrão
+	##
 
-if [[ "${arraymenu[*]}" =~ 'INSTALL_DOT_FILES' ]]; then
-	installDotFiles
-fi
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_DOT_FILES' ]]; then
+		installDotFiles
+	fi
 
-##--------------------------------------------------------------------------------------
-## Instalar softwares técnicos e científicos
-##
+	##--------------------------------------------------------------------------------------
+	## Instalar softwares técnicos e científicos
+	##
 
-if [[ "${arraymenu[*]}" =~ 'INSTALL_TECH_SCI_SOFTWARE' ]]; then
-	installTechSciSoftware
-fi
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_TECH_SCI_SOFTWARE' ]]; then
+		installTechSciSoftware
+	fi
 
-##--------------------------------------------------------------------------------------
-## Instalar Drivers da GPU NVidia
-##
+	##--------------------------------------------------------------------------------------
+	## Instalar Drivers da GPU NVidia
+	##
 
-if [[ "${arraymenu[*]}" =~ 'INSTALL_NVIDIA_DRIVER' ]]; then
-	installNvidiaDriver
-fi
-
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_NVIDIA_DRIVER' ]]; then
+		installNvidiaDriver
+	fi
+done
 
