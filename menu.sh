@@ -290,10 +290,8 @@ if [ -z "$result" ]; then
 	echo "Até a próxima!"
 	exit 1
 fi
-j
-IFS=' ' read -ra arraymenu <<<"$result"
 
-installdevTools
+IFS=' ' read -ra arraymenu <<<"$result"
 
 ##--------------------------------------------------------------------------------------
 ## Cria diretórios do usuário
