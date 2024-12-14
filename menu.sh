@@ -166,6 +166,20 @@ function installUtilities() {
 	! dpkg -s nmap >/dev/null 2>&1 && sudo apt-get install nmap -y
 	! dpkg -s obs-studio >/dev/null 2>&1 && sudo apt-get install obs-studio -y
 	! dpkg -s psensor >/dev/null 2>&1 && sudo apt-get install psensor -y
+	! dpkg -s ffmpeg >/dev/null 2>&1 && sudo apt-get install ffmpeg -y
+	! dpkg -s imagemagick >/dev/null 2>&1 && sudo apt-get install imagemagick -y
+	! dpkg -s sox >/dev/null 2>&1 && sudo apt-get install sox -y
+
+	if ! which yt-dlp; then
+		pip3 install yt-dlp --break-system-packages
+	fi
+
+	if ! which glow; then
+		sudo mkdir -p /etc/apt/keyrings
+		curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+		echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+		sudo apt update && sudo apt install glow
+	fi
 }
 
 ##--------------------------------------------------------------------------------------
@@ -177,6 +191,7 @@ function installAccessories() {
 	! dpkg -s gnome-bluetooth >/dev/null 2>&1 && sudo apt-get install gnome-bluetooth -y
 	! dpkg -s cava >/dev/null 2>&1 && sudo apt-get install cava -y
 	! dpkg -s screenkey >/dev/null 2>&1 && sudo apt-get install screenkey -y
+	! dpkg -s dosbox  >/dev/null 2>&1 && sudo apt-get install dosbox -y
 }
 
 ##--------------------------------------------------------------------------------------
@@ -221,6 +236,17 @@ function installQtile() {
 
 	pipx install qtile
 	pipx inject qtile dbus-next psutil qtile-extras
+}
+
+##--------------------------------------------------------------------------------------
+## Instalar o AstroNvim
+##
+
+function installAstroNvim() {
+	[[ -d "$HOME"/.config/nvim ]] && mv "$HOME"/.config/nvim ~/.config/nvim.bak
+	[[ -d "$HOME"/.local/share/nvim ]] && mv "$HOME"/.local/share/nvim ~/.local/share/nvim.bak
+	git clone https://github.com/AstroNvim/AstroNvim "$HOME"/.config/nvim
+	git clone https://github.com/camurim/astronvim_config "$HOME"/.config/nvim/lua/user
 }
 
 ##--------------------------------------------------------------------------------------
@@ -281,6 +307,7 @@ do
 			"INSTALL_PL_FONTS" "Instalar fontes PowerLine." ON \
 			"INSTALL_LIBRARIES" "Instalar bibliotecas." ON \
 			"INSTALL_DEV_TOOL" "Instalar ferramentas de desenvolvimento." ON \
+			"INSTALL_ASTRO_NVIM" "Instalar o AstroNvim." ON \
 			"INSTALL_UTILITIES" "Instalar utilitários." ON \
 			"INSTALL_ACCESSORIES" "Instalar acessórios." ON \
 			"INSTALL_QTILE" "Instalar o Qtile." ON \
