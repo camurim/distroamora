@@ -213,7 +213,7 @@ function installQtile() {
 	sudo apt install xserver-xorg-core xserver-xorg-input-libinput xinit libpangocairo-1.0-0 python3-xcffib python3-cairocffi -y
 
 	[[ ! -d "$HOME"/src ]] && mkdir "$HOME"/src
-	git clone https://github.com/yshui/picom.git "$HOME"/src
+	git clone https://github.com/yshui/picom.git "$HOME"/src/picom
 	cd "$HOME"/src/picom || return 1
 	meson setup --buildtype=release build
 	ninja -C build
