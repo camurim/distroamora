@@ -54,6 +54,7 @@ function installPrerequisites() {
 	! dpkg -s temurin-8-jdk >/dev/null 2>&1 && sudo apt-get install temurin-8-jdk -y
 	! dpkg -s temurin-17-jdk >/dev/null 2>&1 && sudo apt-get install temurin-17-jdk -y
 	! dpkg -s temurin-23-jdk >/dev/null 2>&1 && sudo apt-get install temurin-23-jdk -y
+	! dpkg -s unzip  >/dev/null 2>&1 && sudo apt-get install unzip -y
 	! dpkg -s libreoffice >/dev/null 2>&1 && sudo apt-get install libreoffice --no-install-recommends -y
 	sudo apt-get install cabextract libmspack0 ttf-mscorefonts-installer -y
 }
@@ -100,13 +101,13 @@ function installDevTools() {
 	! dpkg -s libglvnd-dev >/dev/null 2>&1 && sudo apt-get install libglvnd-dev -y
 	! dpkg -s pkg-config >/dev/null 2>&1 && sudo apt-get install pkg-config -y
 	! dpkg -s vim >/dev/null 2>&1 && sudo apt-get install vim -y
-	! dpkg -s neovim >/dev/null 2>&1 && sudo apt-get install neovim -y
 	! dpkg -s git >/dev/null 2>&1 && sudo apt-get install git -y
 	! dpkg -s gh >/dev/null 2>&1 && sudo apt-get install gh -y
 	! dpkg -s binwalk >/dev/null 2>&1 && sudo apt-get install binwalk -y
+	! dpkg -s gettext >/dev/null 2>&1 && sudo apt-get install gettext -y
 	! dpkg -s python3-all >/dev/null 2>&1 && sudo apt-get install python3-all -y
 	! dpkg -s python3-pip >/dev/null 2>&1 && sudo apt-get install python3-pip -y
-	
+
 	if [ ! -f "$HOME"/.cargo/bin/cargo ]; then
 		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	fi
@@ -245,7 +246,18 @@ function installQtile() {
 function installAstroNvim() {
 	[[ -d "$HOME"/.config/nvim ]] && mv "$HOME"/.config/nvim ~/.config/nvim.bak
 	[[ -d "$HOME"/.local/share/nvim ]] && mv "$HOME"/.local/share/nvim ~/.local/share/nvim.bak
-	git clone https://github.com/AstroNvim/AstroNvim "$HOME"/.config/nvim
+	[[ -d "$HOME"/.local/state/nvim ]] && mv "$HOME"/.local/state/nvim ~/.local/state/nvim.bak
+	[[ -d "$HOME"/.cache/nvim ]] && mv "$HOME"/.cache/nvim ~/.cache/nvim.bak
+
+	[[ -d "$HOME"/src/neovim ]] && rm -rf "$HOME"/src/neovim
+	git clone https://github.com/neovim/neovim "$HOME"/src/neovim
+	cd "$HOME"/src/neovim || return 1
+	make CMAKE_BUILD_TYPE=Release
+	sudo make install
+	sudo ln -s /usr/local/bin/nvim /usr/bin/nvim
+
+	git clone --depth 1 https://github.com/AstroNvim/template "$HOME"/.config/nvim
+	rm -rf "$HOME"/.config/nvim/.git
 	git clone https://github.com/camurim/astronvim_config "$HOME"/.config/nvim/lua/user
 }
 
@@ -356,6 +368,15 @@ do
 	if [[ "${arraymenu[*]}" =~ 'INSTALL_DEV_TOOL' ]]; then
 		installDevTools
 	fi
+
+	##--------------------------------------------------------------------------------------
+	## Instalar o AstroNvim
+	##
+
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_ASTRO_NVIM' ]]; then
+		installAstroNvim
+	fi
+
 
 	##--------------------------------------------------------------------------------------
 	## Instalar utilitários
