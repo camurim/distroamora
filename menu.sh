@@ -39,7 +39,7 @@ function configUserDirectories() {
 ##
 
 function installPrerequisites() {
-	if ! grep -q '.*contrib$'; then
+	if ! grep -q '.*contrib$' /etc/apt/sources.list; then
 		# Usa o "retrovisor" do sed (\1 = primeiro grupo) para fazer referência a tudo capturado pelo grupo
 		sed -r -i 's/^deb(.*)$/deb\1 non-free non-free-firmware contrib/g' /etc/apt/sources.list
 	fi
