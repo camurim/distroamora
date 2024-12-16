@@ -262,7 +262,7 @@ function installQtile() {
 			Exec=/home/carlos/.local/bin/qtile start
 		EOF
 
-		sudo cp "$TMPFILE" "$DESKTOPFILE"
+		sudo cp -f "$TMPFILE" "$DESKTOPFILE"
 	fi
 }
 
