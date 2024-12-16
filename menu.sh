@@ -362,6 +362,8 @@ function installAstroNvim() {
 	git clone https://github.com/camurim/astronvim_config "$HOME"/.config/nvim/lua/user
 
 	if which cargo && ! which neovide; then
+		! dpkg -s libfreetype6-dev >/dev/null 2>&1 && sudo apt-get install libfreetype6-dev -y
+		! dpkg -s libfontconfig1-dev >/dev/null 2>&1 && sudo apt-get install libfontconfig1-dev -y
 		cargo install --git https://github.com/neovide/neovide
 	fi
 }
