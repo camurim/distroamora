@@ -351,6 +351,10 @@ function installAstroNvim() {
 	git clone --depth 1 https://github.com/AstroNvim/template "$HOME"/.config/nvim
 	rm -rf "$HOME"/.config/nvim/.git
 	git clone https://github.com/camurim/astronvim_config "$HOME"/.config/nvim/lua/user
+
+	if which cargo && ! which neovide; then
+		cargo install --git https://github.com/neovide/neovide
+	fi
 }
 
 ##--------------------------------------------------------------------------------------
