@@ -180,6 +180,7 @@ function installDevTools() {
 	! dpkg -s gettext >/dev/null 2>&1 && sudo apt-get install gettext -y
 	! dpkg -s python3-all >/dev/null 2>&1 && sudo apt-get install python3-all -y
 	! dpkg -s python3-pip >/dev/null 2>&1 && sudo apt-get install python3-pip -y
+	! dpkg -s pipx >/dev/null 2>&1 && sudo apt install --no-install-recommends pipx -y
 
 	if [ ! -f "$HOME"/.cargo/bin/cargo ]; then
 		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -304,8 +305,8 @@ function installQtile() {
 	dpkg -s lightdm >/dev/null 2>&1 && sudo systemctl enable lightdm
 
 	sudo apt install cmake libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-glx0-dev libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev libxcb-xfixes0-dev meson ninja-build uthash-dev -y
-	sudo apt install --no-install-recommends pipx -y
 	sudo apt install xserver-xorg-core xserver-xorg-input-libinput xinit libpangocairo-1.0-0 python3-xcffib python3-cairocffi -y
+	! dpkg -s pipx >/dev/null 2>&1 && sudo apt install --no-install-recommends pipx -y
 
 	[[ ! -d "$HOME"/src ]] && mkdir "$HOME"/src
 	git clone https://github.com/yshui/picom.git "$HOME"/src/picom
