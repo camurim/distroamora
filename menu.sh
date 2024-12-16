@@ -54,7 +54,7 @@ function installPrerequisites() {
 	! dpkg -s temurin-8-jdk >/dev/null 2>&1 && sudo apt-get install temurin-8-jdk -y
 	! dpkg -s temurin-17-jdk >/dev/null 2>&1 && sudo apt-get install temurin-17-jdk -y
 	! dpkg -s temurin-23-jdk >/dev/null 2>&1 && sudo apt-get install temurin-23-jdk -y
-	! dpkg -s unzip  >/dev/null 2>&1 && sudo apt-get install unzip -y
+	! dpkg -s unzip >/dev/null 2>&1 && sudo apt-get install unzip -y
 	! dpkg -s libreoffice >/dev/null 2>&1 && sudo apt-get install libreoffice --no-install-recommends -y
 	sudo apt-get install cabextract libmspack0 ttf-mscorefonts-installer -y
 }
@@ -83,6 +83,14 @@ function installLibraries() {
 function installPlFonts() {
 	! dpkg -s powerline >/dev/null 2>&1 && sudo apt-get install powerline -y
 	! dpkg -s fonts-powerline >/dev/null 2>&1 && sudo apt-get install fonts-powerline -y
+
+	while true; do
+		read -p "Install new font? (Y/N): " confirm
+		if [[ $confirm == [nN] ]]; then
+			break
+		fi
+		bash -c "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
+	done
 }
 
 ##--------------------------------------------------------------------------------------
@@ -192,7 +200,7 @@ function installAccessories() {
 	! dpkg -s gnome-bluetooth >/dev/null 2>&1 && sudo apt-get install gnome-bluetooth -y
 	! dpkg -s cava >/dev/null 2>&1 && sudo apt-get install cava -y
 	! dpkg -s screenkey >/dev/null 2>&1 && sudo apt-get install screenkey -y
-	! dpkg -s dosbox  >/dev/null 2>&1 && sudo apt-get install dosbox -y
+	! dpkg -s dosbox >/dev/null 2>&1 && sudo apt-get install dosbox -y
 }
 
 ##--------------------------------------------------------------------------------------
@@ -224,6 +232,9 @@ function installFishShell() {
 ##
 
 function installQtile() {
+	TMPFILE=$(mktemp -p "$TMP"/)
+	DESKTOPFILE="/usr/share/xsessions/qtile.desktop"
+
 	sudo apt install cmake libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-glx0-dev libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev libxcb-xfixes0-dev meson ninja-build uthash-dev -y
 	sudo apt install --no-install-recommends pipx -y
 	sudo apt install xserver-xorg-core xserver-xorg-input-libinput xinit libpangocairo-1.0-0 python3-xcffib python3-cairocffi -y
@@ -237,6 +248,19 @@ function installQtile() {
 
 	pipx install qtile
 	pipx inject qtile dbus-next psutil qtile-extras
+
+	if [ ! -f "$DESKTOPFILE" ]; then
+		cat >"$TMPFILE" <<-"EOF"
+			[Desktop Entry]
+			Name=Qtile
+			Comment=Qtile Session
+			Type=Application
+			Keywords=wm;tiling
+			Exec=/home/carlos/.local/bin/qtile start
+		EOF
+
+		sudo cp "$TMPFILE" "$DESKTOPFILE"
+	fi
 }
 
 ##--------------------------------------------------------------------------------------
@@ -268,7 +292,6 @@ function installAstroNvim() {
 function installNvidiaDriver() {
 	! dpkg -s nvidia-driver >/dev/null 2>&1 && sudo apt-get install nvidia-driver -y
 }
-
 
 ##--------------------------------------------------------------------------------------
 ## Install config files
@@ -308,8 +331,7 @@ if ! whiptail --title "$title" --yesno "Este programa irá instalar os pacotes n
 	exit 1
 fi
 
-while true 
-do
+while true; do
 	## Selecionar as opções
 
 	result=$(
@@ -377,7 +399,6 @@ do
 		installAstroNvim
 	fi
 
-
 	##--------------------------------------------------------------------------------------
 	## Instalar utilitários
 	##
@@ -434,4 +455,3 @@ do
 		installNvidiaDriver
 	fi
 done
-
