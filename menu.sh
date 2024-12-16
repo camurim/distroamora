@@ -54,7 +54,7 @@ function installPrerequisites() {
 	! dpkg -s temurin-8-jdk >/dev/null 2>&1 && sudo apt-get install temurin-8-jdk -y
 	! dpkg -s temurin-17-jdk >/dev/null 2>&1 && sudo apt-get install temurin-17-jdk -y
 	! dpkg -s temurin-23-jdk >/dev/null 2>&1 && sudo apt-get install temurin-23-jdk -y
-	! dpkg -s unzip  >/dev/null 2>&1 && sudo apt-get install unzip -y
+	! dpkg -s unzip >/dev/null 2>&1 && sudo apt-get install unzip -y
 	! dpkg -s libreoffice >/dev/null 2>&1 && sudo apt-get install libreoffice --no-install-recommends -y
 	sudo apt-get install cabextract libmspack0 ttf-mscorefonts-installer -y
 }
@@ -64,16 +64,81 @@ function installPrerequisites() {
 ##
 
 function installLibraries() {
-	sudo apt install libx11-dev libx11-xcb-dev libxext6 libxmu-dev libxmuu-dev libxext-dev libxcb1-dev libxcb-damage0-dev -y
-	sudo apt install libxcb-dpms0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev -y
-	sudo apt install libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-glx0-dev libpixman-1-dev -y
-	sudo apt install libdbus-1-dev libconfig-dev libgl-dev libegl-dev libpcre2-dev libevdev-dev uthash-dev libev-dev libx11-xcb-dev -y
-	sudo apt install libicu-dev libncurses-dev libgmp-dev zlib1g-dev libperl-dev libedit-dev libpam0g-dev libpam-dev libkrb5-dev -y
-	sudo apt install libldap2-dev libxslt1-dev libossp-uuid-dev bison flex opensp tcl-dev xsltproc install libperl-dev libedit-dev -y
-	sudo apt install libpam0g-dev libpam-dev libkrb5-dev libldap2-dev libxslt1-dev libossp-uuid-dev bison flex opensp tcl-dev xsltproc -y
-	sudo apt install dpkg-dev docbook-dsssl docbook libreadline-dev libasound2-dev libasound2 libalsaplayer-dev sdl2 sdl2_image -y
-	sudo apt install libsdl2-image-dev gcc-multilib bsdtar libarchive-tools patchelf rpm2cpio lib32ncurses-dev libasound2-dev -y
-	sudo apt install libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev -y
+	! dpkg -s libx11-dev >/dev/null 2>&1 && sudo apt-get install libx11-dev -y
+	! dpkg -s libx11-xcb-dev >/dev/null 2>&1 && sudo apt-get install libx11-xcb-dev -y
+	! dpkg -s libxext6 >/dev/null 2>&1 && sudo apt-get install libxext6 -y
+	! dpkg -s libxmu-dev >/dev/null 2>&1 && sudo apt-get install libxmu -y
+	! dpkg -s libxmuu-dev >/dev/null 2>&1 && sudo apt-get install libxmuu -y
+	! dpkg -s libxext-dev >/dev/null 2>&1 && sudo apt-get install libxext-dev -y
+	! dpkg -s libxcb1-dev >/dev/null 2>&1 && sudo apt-get install libxcb1-dev -y
+	! dpkg -s libxcb-damage0-dev >/dev/null 2>&1 && sudo apt-get install libxcb-damage0-dev -y
+	! dpkg -s libx11-dev >/dev/null 2>&1 && sudo apt-get install libx11-dev -y
+	! dpkg -s libx11-xcb-dev >/dev/null 2>&1 && sudo apt-get install libx11-xcb-dev -y
+	! dpkg -s libxext6 >/dev/null 2>&1 && sudo apt-get install libxext6 -y
+	! dpkg -s libxcb-dpms0-dev >/dev/null 2>&1 && sudo apt-get install libxcb-dpms0-dev -y
+	! dpkg -s libxcb-xfixes0-dev >/dev/null 2>&1 && sudo apt-get install libxcb-xfixes0-dev -y
+	! dpkg -s libxcb-shape0-dev >/dev/null 2>&1 && sudo apt-get install libxcb-shape0-dev -y
+	! dpkg -s libxcb-render-util0-dev >/dev/null 2>&1 && sudo apt-get install libxcb-render-util0-dev -y
+	! dpkg -s libxcb-render0-dev >/dev/null 2>&1 && sudo apt-get install libxcb-render0-dev -y
+	! dpkg -s libxcb-randr0-dev >/dev/null 2>&1 && sudo apt-get install libxcb-randr0-dev -y
+	! dpkg -s libxcb-composite0-dev >/dev/null 2>&1 && sudo apt-get install libxcb-composite0-dev -y
+	! dpkg -s libxcb-image0-dev >/dev/null 2>&1 && sudo apt-get install libxcb-image0-dev -y
+	! dpkg -s libxcb-present-dev >/dev/null 2>&1 && sudo apt-get install libxcb-present-dev -y
+	! dpkg -s libxcb-glx0-dev >/dev/null 2>&1 && sudo apt-get install libxcb-glx0-dev -y
+	! dpkg -s libpixman-1-dev >/dev/null 2>&1 && sudo apt-get install libpixman-1-dev -y
+	! dpkg -s libdbus-1-dev >/dev/null 2>&1 && sudo apt-get install libdbus-1-dev -y
+	! dpkg -s libconfig-dev >/dev/null 2>&1 && sudo apt-get install libconfig-dev -y
+	! dpkg -s libgl-dev >/dev/null 2>&1 && sudo apt-get install libgl-dev -y
+	! dpkg -s libegl-dev >/dev/null 2>&1 && sudo apt-get install libegl-dev -y
+	! dpkg -s libpcre2-dev >/dev/null 2>&1 && sudo apt-get install libpcre2-dev -y
+	! dpkg -s libevdev-dev >/dev/null 2>&1 && sudo apt-get install libevdev-dev -y
+	! dpkg -s uthash-dev >/dev/null 2>&1 && sudo apt-get install uthash-dev -y
+	! dpkg -s libev-dev >/dev/null 2>&1 && sudo apt-get install libev-dev -y
+	! dpkg -s libx11-xcb-dev >/dev/null 2>&1 && sudo apt-get install libx11-xcb-dev -y
+	! dpkg -s libicu-dev >/dev/null 2>&1 && sudo apt-get install libicu-dev -y
+	! dpkg -s libncurses-dev >/dev/null 2>&1 && sudo apt-get install libncurses-dev -y
+	! dpkg -s libgmp-dev >/dev/null 2>&1 && sudo apt-get install libgmp-dev -y
+	! dpkg -s zlib1g-dev >/dev/null 2>&1 && sudo apt-get install zlib1g-dev -y
+	! dpkg -s libperl-dev >/dev/null 2>&1 && sudo apt-get install libperl-dev -y
+	! dpkg -s libedit-dev >/dev/null 2>&1 && sudo apt-get install libedit-dev -y
+	! dpkg -s libpam0g-dev >/dev/null 2>&1 && sudo apt-get install libpam0g-dev -y
+	! dpkg -s libpam-dev >/dev/null 2>&1 && sudo apt-get install libpam-dev -y
+	! dpkg -s libkrb5-dev >/dev/null 2>&1 && sudo apt-get install libkrb5-dev -y
+	! dpkg -s libldap2-dev >/dev/null 2>&1 && sudo apt-get install libldap2-dev -y
+	! dpkg -s libxslt1-dev >/dev/null 2>&1 && sudo apt-get install libxslt1-dev -y
+	! dpkg -s libossp-uuid-dev >/dev/null 2>&1 && sudo apt-get install libossp-uuid-dev -y
+	! dpkg -s bison >/dev/null 2>&1 && sudo apt-get install bison -y
+	! dpkg -s flex >/dev/null 2>&1 && sudo apt-get install flex -y
+	! dpkg -s opensp >/dev/null 2>&1 && sudo apt-get install opensp -y
+	! dpkg -s tcl-dev >/dev/null 2>&1 && sudo apt-get install tcl-dev -y
+	! dpkg -s xsltproc >/dev/null 2>&1 && sudo apt-get install xsltproc -y
+	! dpkg -s libperl-dev >/dev/null 2>&1 && sudo apt-get install libperl-dev -y
+	! dpkg -s libedit-dev >/dev/null 2>&1 && sudo apt-get install libedit-dev -y
+	! dpkg -s libossp-uuid-dev >/dev/null 2>&1 && sudo apt-get install libossp-uuid-dev -y
+	! dpkg -s dpkg-dev >/dev/null 2>&1 && sudo apt-get install dpkg-dev -y
+	! dpkg -s docbook-dsssl >/dev/null 2>&1 && sudo apt-get install docbook-dsssl -y
+	! dpkg -s docbook >/dev/null 2>&1 && sudo apt-get install docbook -y
+	! dpkg -s libreadline-dev >/dev/null 2>&1 && sudo apt-get install libreadline-dev -y
+	! dpkg -s libasound2-dev >/dev/null 2>&1 && sudo apt-get install libasound2-dev -y
+	! dpkg -s libasound2 >/dev/null 2>&1 && sudo apt-get install libasound2 -y
+	! dpkg -s libalsaplayer-dev >/dev/null 2>&1 && sudo apt-get install libalsaplayer-dev -y
+	! dpkg -s sdl2 >/dev/null 2>&1 && sudo apt-get install sdl2 -y
+	! dpkg -s sdl2_image >/dev/null 2>&1 && sudo apt-get install sdl2_image -y
+	! dpkg -s libsdl2-image-dev >/dev/null 2>&1 && sudo apt-get install libsdl2-image-dev -y
+	! dpkg -s gcc-multilib >/dev/null 2>&1 && sudo apt-get install gcc-multilib -y
+	! dpkg -s bsdtar >/dev/null 2>&1 && sudo apt-get install bsdtar -y
+	! dpkg -s libarchive-tools >/dev/null 2>&1 && sudo apt-get install libarchive-tools -y
+	! dpkg -s patchelf >/dev/null 2>&1 && sudo apt-get install patchelf -y
+	! dpkg -s rpm2cpio >/dev/null 2>&1 && sudo apt-get install rpm2cpio -y
+	! dpkg -s lib32ncurses-dev >/dev/null 2>&1 && sudo apt-get install lib32ncurses-dev -y
+	! dpkg -s libasound2-dev >/dev/null 2>&1 && sudo apt-get install libasound2-dev -y
+	! dpkg -s libx11-dev >/dev/null 2>&1 && sudo apt-get install libx11-dev -y
+	! dpkg -s libxrandr-dev >/dev/null 2>&1 && sudo apt-get install libxrandr-dev -y
+	! dpkg -s libxi-dev >/dev/null 2>&1 && sudo apt-get install libxi-dev -y
+	! dpkg -s libgl1-mesa-dev >/dev/null 2>&1 && sudo apt-get install libgl1-mesa-dev -y
+	! dpkg -s libglu1-mesa-dev >/dev/null 2>&1 && sudo apt-get install libglu1-mesa-dev -y
+	! dpkg -s libxcursor-dev >/dev/null 2>&1 && sudo apt-get install libxcursor-dev -y
+	! dpkg -s libxinerama-dev >/dev/null 2>&1 && sudo apt-get install libxinerama-dev -y
 }
 
 ##------------------------------------------------------------------------------------
@@ -84,7 +149,13 @@ function installPlFonts() {
 	! dpkg -s powerline >/dev/null 2>&1 && sudo apt-get install powerline -y
 	! dpkg -s fonts-powerline >/dev/null 2>&1 && sudo apt-get install fonts-powerline -y
 
-	bash -c "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
+	while true; do
+		read -p "Install another font? (Y/N): " confirm
+		if [[ $confirm == [nN] ]]; then
+			break
+		fi
+		bash -c "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
+	done
 }
 
 ##--------------------------------------------------------------------------------------
@@ -109,6 +180,7 @@ function installDevTools() {
 	! dpkg -s gettext >/dev/null 2>&1 && sudo apt-get install gettext -y
 	! dpkg -s python3-all >/dev/null 2>&1 && sudo apt-get install python3-all -y
 	! dpkg -s python3-pip >/dev/null 2>&1 && sudo apt-get install python3-pip -y
+	! dpkg -s pipx >/dev/null 2>&1 && sudo apt install --no-install-recommends pipx -y
 
 	if [ ! -f "$HOME"/.cargo/bin/cargo ]; then
 		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -188,7 +260,7 @@ function installUtilities() {
 		sudo mkdir -p /etc/apt/keyrings
 		curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
 		echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-		sudo apt update && sudo apt install glow
+		sudo apt update && sudo apt install glow -y
 	fi
 }
 
@@ -201,7 +273,7 @@ function installAccessories() {
 	! dpkg -s gnome-bluetooth >/dev/null 2>&1 && sudo apt-get install gnome-bluetooth -y
 	! dpkg -s cava >/dev/null 2>&1 && sudo apt-get install cava -y
 	! dpkg -s screenkey >/dev/null 2>&1 && sudo apt-get install screenkey -y
-	! dpkg -s dosbox  >/dev/null 2>&1 && sudo apt-get install dosbox -y
+	! dpkg -s dosbox >/dev/null 2>&1 && sudo apt-get install dosbox -y
 }
 
 ##--------------------------------------------------------------------------------------
@@ -233,9 +305,15 @@ function installFishShell() {
 ##
 
 function installQtile() {
+	TMPFILE=$(mktemp -p "$TMP"/)
+	DESKTOPFILE="/usr/share/xsessions/qtile.desktop"
+
+	! dpkg -s lightdm >/dev/null 2>&1 && sudo apt-get install lightdm -y
+	dpkg -s lightdm >/dev/null 2>&1 && sudo systemctl enable lightdm
+
 	sudo apt install cmake libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-glx0-dev libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev libxcb-xfixes0-dev meson ninja-build uthash-dev -y
-	sudo apt install --no-install-recommends pipx -y
 	sudo apt install xserver-xorg-core xserver-xorg-input-libinput xinit libpangocairo-1.0-0 python3-xcffib python3-cairocffi -y
+	! dpkg -s pipx >/dev/null 2>&1 && sudo apt install --no-install-recommends pipx -y
 
 	[[ ! -d "$HOME"/src ]] && mkdir "$HOME"/src
 	git clone https://github.com/yshui/picom.git "$HOME"/src/picom
@@ -246,6 +324,19 @@ function installQtile() {
 
 	pipx install qtile
 	pipx inject qtile dbus-next psutil qtile-extras
+
+	if [ ! -f "$DESKTOPFILE" ]; then
+		cat >"$TMPFILE" <<-"EOF"
+			[Desktop Entry]
+			Name=Qtile
+			Comment=Qtile Session
+			Type=Application
+			Keywords=wm;tiling
+			Exec=/home/carlos/.local/bin/qtile start
+		EOF
+
+		sudo cp -f "$TMPFILE" "$DESKTOPFILE"
+	fi
 }
 
 ##--------------------------------------------------------------------------------------
@@ -269,6 +360,10 @@ function installAstroNvim() {
 	git clone --depth 1 https://github.com/AstroNvim/template "$HOME"/.config/nvim
 	rm -rf "$HOME"/.config/nvim/.git
 	git clone https://github.com/camurim/astronvim_config "$HOME"/.config/nvim/lua/user
+
+	if which cargo && ! which neovide; then
+		cargo install --git https://github.com/neovide/neovide
+	fi
 }
 
 ##--------------------------------------------------------------------------------------
@@ -278,7 +373,6 @@ function installAstroNvim() {
 function installNvidiaDriver() {
 	! dpkg -s nvidia-driver >/dev/null 2>&1 && sudo apt-get install nvidia-driver -y
 }
-
 
 ##--------------------------------------------------------------------------------------
 ## Install config files
@@ -318,8 +412,7 @@ if ! whiptail --title "$title" --yesno "Este programa irá instalar os pacotes n
 	exit 1
 fi
 
-while true 
-do
+while true; do
 	## Selecionar as opções
 
 	result=$(
@@ -387,7 +480,6 @@ do
 		installAstroNvim
 	fi
 
-
 	##--------------------------------------------------------------------------------------
 	## Instalar utilitários
 	##
@@ -444,4 +536,3 @@ do
 		installNvidiaDriver
 	fi
 done
-
