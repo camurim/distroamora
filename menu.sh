@@ -83,6 +83,8 @@ function installLibraries() {
 function installPlFonts() {
 	! dpkg -s powerline >/dev/null 2>&1 && sudo apt-get install powerline -y
 	! dpkg -s fonts-powerline >/dev/null 2>&1 && sudo apt-get install fonts-powerline -y
+
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/officialrajdeepsingh/nerd-fonts-installer/main/install.sh)"
 }
 
 ##--------------------------------------------------------------------------------------
@@ -111,6 +113,13 @@ function installDevTools() {
 	if [ ! -f "$HOME"/.cargo/bin/cargo ]; then
 		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	fi
+
+	if ! which nvm; then
+		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+		source "$HOME"/.bashrc
+		nvm install 22
+	fi
+
 }
 
 ##--------------------------------------------------------------------------------------
@@ -250,6 +259,7 @@ function installAstroNvim() {
 	[[ -d "$HOME"/.cache/nvim ]] && mv "$HOME"/.cache/nvim ~/.cache/nvim.bak
 
 	[[ -d "$HOME"/src/neovim ]] && rm -rf "$HOME"/src/neovim
+
 	git clone https://github.com/neovim/neovim "$HOME"/src/neovim
 	cd "$HOME"/src/neovim || return 1
 	make CMAKE_BUILD_TYPE=Release
