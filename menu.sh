@@ -151,10 +151,11 @@ function installLibraries() {
 ##
 
 function installPlFonts() {
-	! dpkg -s powerline >/dev/null 2>&1 && sudo apt-get install powerline -y
 	! dpkg -s fonts-powerline >/dev/null 2>&1 && sudo apt-get install fonts-powerline -y
 
-	echo "Powerline fonts has been installed!"
+	if [ "$?" -eq 0 ]; then
+		echo "Powerline fonts has been installed!"
+	fi
 
 	while true; do
 		read -p "Install another font? (Y/N): " confirm
@@ -262,8 +263,13 @@ function installUtilities() {
 	! dpkg -s ffmpeg >/dev/null 2>&1 && sudo apt-get install ffmpeg -y
 	! dpkg -s imagemagick >/dev/null 2>&1 && sudo apt-get install imagemagick -y
 	! dpkg -s sox >/dev/null 2>&1 && sudo apt-get install sox -y
+	! dpkg -s powerline >/dev/null 2>&1 && sudo apt-get install powerline -y
 
-	if ! which yt-dlp; then
+	if ! pip3 list 2>&1 | grep -q powerline-shell; then
+		pip3 install powerline-shell --break-system-packages
+	fi
+
+	if ! pip3 list 2>&1 | grep -q yt-dlp; then
 		pip3 install yt-dlp --break-system-packages
 	fi
 
