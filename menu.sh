@@ -367,6 +367,7 @@ function installQtile() {
 		EOF
 
 		sudo cp -f "$TMPFILE" "$DESKTOPFILE"
+		sudo chmod 644 "$DESKTOPFILE"
 	fi
 }
 
