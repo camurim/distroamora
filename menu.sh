@@ -397,6 +397,48 @@ function installQtile() {
 ##
 
 function installHyperland() {
+	# Instalar dependências
+	! dpkg -s meson >/dev/null 2>&1 && sudo apt install meson -y
+	! dpkg -s wget 2>&1 && sudo apt install wget -y
+	! dpkg -s build-essential 2>&1 && sudo apt install build-essential -y
+	! dpkg -s ninja-build 2>&1 && sudo apt install ninja-build -y
+	! dpkg -s cmake-extras 2>&1 && sudo apt install cmake-extras -y
+	! dpkg -s cmake 2>&1 && sudo apt install cmake -y
+	! dpkg -s gettext 2>&1 && sudo apt install gettext -y
+	! dpkg -s gettext-base 2>&1 && sudo apt install gettext-base -y
+	! dpkg -s fontconfig 2>&1 && sudo apt install fontconfig -y
+	! dpkg -s libfontconfig-dev 2>&1 && sudo apt install libfontconfig-dev -y
+	! dpkg -s libffi-dev 2>&1 && sudo apt install libffi-dev -y
+	! dpkg -s libxml2-dev 2>&1 && sudo apt install libxml2-dev -y
+	! dpkg -s libdrm-dev 2>&1 && sudo apt install libdrm-dev -y
+	! dpkg -s libxkbcommon-x11-dev 2>&1 && sudo apt install libxkbcommon-x11-dev -y
+	! dpkg -s libxkbregistry-dev 2>&1 && sudo apt install libxkbregistry-dev -y
+	! dpkg -s libxkbcommon-dev 2>&1 && sudo apt install libxkbcommon-dev -y
+	! dpkg -s libpixman-1-dev 2>&1 && sudo apt install libpixman-1-dev -y
+	! dpkg -s libudev-dev 2>&1 && sudo apt install libudev-dev -y
+	! dpkg -s libseat-dev 2>&1 && sudo apt install libseat-dev -y
+	! dpkg -s seatd 2>&1 && sudo apt install seatd -y
+	! dpkg -s libxcb-dri3-dev 2>&1 && sudo apt install libxcb-dri3-dev -y
+	! dpkg -s libegl-dev 2>&1 && sudo apt install libegl-dev -y
+	! dpkg -s libgles2 2>&1 && sudo apt install libgles2 -y
+	! dpkg -s libegl1-mesa-dev 2>&1 && sudo apt install libegl1-mesa-dev -y
+	! dpkg -s glslang-tools 2>&1 && sudo apt install glslang-tools -y
+	! dpkg -s libinput-bin 2>&1 && sudo apt install libinput-bin -y
+	! dpkg -s libinput-dev 2>&1 && sudo apt install libinput-dev -y
+	! dpkg -s libxcb-composite0-dev 2>&1 && sudo apt install libxcb-composite0-dev -y
+	! dpkg -s libavutil-dev 2>&1 && sudo apt install libavutil-dev -y
+	! dpkg -s libavcodec-dev 2>&1 && sudo apt install libavcodec-dev -y
+	! dpkg -s libavformat-dev 2>&1 && sudo apt install libavformat-dev -y
+	! dpkg -s libxcb-ewmh2 2>&1 && sudo apt install libxcb-ewmh2 -y
+	! dpkg -s libxcb-ewmh-dev 2>&1 && sudo apt install libxcb-ewmh-dev -y
+	! dpkg -s libxcb-present-dev 2>&1 && sudo apt install libxcb-present-dev -y
+	! dpkg -s libxcb-icccm4-dev 2>&1 && sudo apt install libxcb-icccm4-dev -y
+	! dpkg -s libxcb-render-util0-dev 2>&1 && sudo apt install libxcb-render-util0-dev -y
+	! dpkg -s libxcb-res0-dev 2>&1 && sudo apt install libxcb-res0-dev -y
+	! dpkg -s libxcb-xinput-dev 2>&1 && sudo apt install libxcb-xinput-dev -y
+	! dpkg -s libtomlplusplus3 2>&1 && sudo apt install libtomlplusplus3 -y
+	! dpkg -s xdg-desktop-portal-wlr 2>&1 && sudo apt install xdg-desktop-portal-wlr -y
+
 	[[ ! -d "$HOME"/src ]] && mkdir "$HOME"/src
 
 	git clone --recursive https://github.com/hyprwm/Hyprland "$HOME"/src
