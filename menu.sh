@@ -58,7 +58,9 @@ function installPrerequisites() {
 	! dpkg -s temurin-23-jdk >/dev/null 2>&1 && sudo apt-get install temurin-23-jdk -y
 	! dpkg -s unzip >/dev/null 2>&1 && sudo apt-get install unzip -y
 	! dpkg -s libreoffice >/dev/null 2>&1 && sudo apt-get install libreoffice --no-install-recommends -y
-	sudo apt-get install cabextract libmspack0 ttf-mscorefonts-installer -y
+	! dpkg -s cabextract >/dev/null 2>&1 && sudo apt-get install cabextract -y
+	! dpkg -s libmspack0 >/dev/null 2>&1 && sudo apt-get install libmspack0 -y
+	! dpkg -s ttf-mscorefonts-installer >/dev/null 2>&1 && sudo apt-get install ttf-mscorefonts-installer -y
 }
 
 ##------------------------------------------------------------------------------------
