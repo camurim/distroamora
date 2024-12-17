@@ -345,6 +345,8 @@ function installQtile() {
 	! dpkg -s pipx >/dev/null 2>&1 && sudo apt install --no-install-recommends pipx -y
 
 	[[ ! -d "$HOME"/src ]] && mkdir "$HOME"/src
+	[[ -d "$HOME"/src/picom ]] && rm -rf "$HOME"/src/picom
+
 	git clone https://github.com/yshui/picom.git "$HOME"/src/picom
 	cd "$HOME"/src/picom || return 1
 	meson setup --buildtype=release build
