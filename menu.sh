@@ -5,6 +5,7 @@
 ##
 
 TMP=${TMP:-/tmp}
+HOME=${HOME:-/home/carlos}
 
 #-------------------------------------------------------------------------------------
 # Autentica o SUDO
@@ -152,6 +153,8 @@ function installLibraries() {
 function installPlFonts() {
 	! dpkg -s powerline >/dev/null 2>&1 && sudo apt-get install powerline -y
 	! dpkg -s fonts-powerline >/dev/null 2>&1 && sudo apt-get install fonts-powerline -y
+
+	echo "Powerline fonts has been installed!"
 
 	while true; do
 		read -p "Install another font? (Y/N): " confirm
@@ -317,7 +320,10 @@ function installQtile() {
 	DESKTOPFILE="/usr/share/xsessions/qtile.desktop"
 
 	! dpkg -s lightdm >/dev/null 2>&1 && sudo apt-get install lightdm -y
-	dpkg -s lightdm >/dev/null 2>&1 && sudo systemctl enable lightdm
+
+	if ! sudo systemctl status lightdm | grep -q "lightdm.service; enabled"; then
+		dpkg -s lightdm >/dev/null 2>&1 && sudo systemctl enable lightdm
+	fi
 
 	! dpkg -s cmake >/dev/null 2>&1 && sudo apt install cmake -y
 	! dpkg -s libconfig-dev >/dev/null 2>&1 && sudo apt install libconfig-dev -y
