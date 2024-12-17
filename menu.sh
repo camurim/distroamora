@@ -43,8 +43,10 @@ function installPrerequisites() {
 		# Usa o "retrovisor" do sed (\1 = primeiro grupo) para fazer referência a tudo capturado pelo grupo
 		sed -r -i 's/^deb(.*)$/deb\1 non-free non-free-firmware contrib/g' /etc/apt/sources.list
 	fi
+
 	sudo apt-get update -y
 	sudo apt-get upgrade -y
+
 	! dpkg -s whiptail >/dev/null 2>&1 && sudo apt-get install whiptail -y
 	! dpkg -s wget >/dev/null 2>&1 && sudo apt-get install wget -y
 	! dpkg -s curl >/dev/null 2>&1 && sudo apt-get install curl -y
@@ -184,6 +186,10 @@ function installDevTools() {
 
 	if [ ! -f "$HOME"/.cargo/bin/cargo ]; then
 		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+	fi
+
+	if [ -d "$HOME"/.nvm ]; then
+		PATH=$PATH:"$HOME"/.nvm
 	fi
 
 	if ! which nvm; then
