@@ -311,8 +311,37 @@ function installQtile() {
 	! dpkg -s lightdm >/dev/null 2>&1 && sudo apt-get install lightdm -y
 	dpkg -s lightdm >/dev/null 2>&1 && sudo systemctl enable lightdm
 
-	sudo apt install cmake libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-glx0-dev libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev libxcb-xfixes0-dev meson ninja-build uthash-dev -y
-	sudo apt install xserver-xorg-core xserver-xorg-input-libinput xinit libpangocairo-1.0-0 python3-xcffib python3-cairocffi -y
+	! dpkg -s cmake >/dev/null 2>&1 && sudo apt install cmake -y
+	! dpkg -s libconfig-dev >/dev/null 2>&1 && sudo apt install libconfig-dev -y
+	! dpkg -s libdbus-1-dev >/dev/null 2>&1 && sudo apt install libdbus-1-dev -y
+	! dpkg -s libegl-dev >/dev/null 2>&1 && sudo apt install libegl-dev -y
+	! dpkg -s libev-dev >/dev/null 2>&1 && sudo apt install libev-dev -y
+	! dpkg -s libgl-dev >/dev/null 2>&1 && sudo apt install libgl-dev -y
+	! dpkg -s libepoxy-dev >/dev/null 2>&1 && sudo apt install libepoxy-dev -y
+	! dpkg -s libpcre2-dev >/dev/null 2>&1 && sudo apt install libpcre2-dev -y
+	! dpkg -s libpixman-1-dev >/dev/null 2>&1 && sudo apt install libpixman-1-dev -y
+	! dpkg -s libx11-xcb-dev >/dev/null 2>&1 && sudo apt install libx11-xcb-dev -y
+	! dpkg -s libxcb1-dev >/dev/null 2>&1 && sudo apt install libxcb1-dev -y
+	! dpkg -s libxcb-composite0-dev >/dev/null 2>&1 && sudo apt install libxcb-composite0-dev -y
+	! dpkg -s libxcb-damage0-dev >/dev/null 2>&1 && sudo apt install libxcb-damage0-dev-y
+	! dpkg -s libxcb-glx0-dev >/dev/null 2>&1 && sudo apt install libxcb-glx0-dev -y
+	! dpkg -s libxcb-image0-dev >/dev/null 2>&1 && sudo apt install libxcb-image0-dev -y
+	! dpkg -s libxcb-present-dev >/dev/null 2>&1 && sudo apt install libxcb-present-dev -y
+	! dpkg -s libxcb-randr0-dev >/dev/null 2>&1 && sudo apt install libxcb-randr0-dev -y
+	! dpkg -s libxcb-render0-dev >/dev/null 2>&1 && sudo apt install libxcb-render0-dev -y
+	! dpkg -s libxcb-render-util0-dev >/dev/null 2>&1 && sudo apt install libxcb-render-util0-dev -y
+	! dpkg -s libxcb-shape0-dev >/dev/null 2>&1 && sudo apt install libxcb-shape0-dev -y
+	! dpkg -s libxcb-util-dev >/dev/null 2>&1 && sudo apt install libxcb-util-dev -y
+	! dpkg -s libxcb-xfixes0-dev >/dev/null 2>&1 && sudo apt install libxcb-xfixes0-dev -y
+	! dpkg -s meson >/dev/null 2>&1 && sudo apt install meson -y
+	! dpkg -s ninja-build >/dev/null 2>&1 && sudo apt install ninja-build -y
+	! dpkg -s uthash-dev >/dev/null 2>&1 && sudo apt install uthash-dev -y
+	! dpkg -s xserver-xorg-core >/dev/null 2>&1 && sudo apt install xserver-xorg-core -y
+	! dpkg -s xserver-xorg-input-libinput >/dev/null 2>&1 && sudo apt install xserver-xorg-input-libinput -y
+	! dpkg -s xinit >/dev/null 2>&1 && sudo apt install xinit -y
+	! dpkg -s libpangocairo-1.0-0 >/dev/null 2>&1 && sudo apt install libpangocairo-1.0-0 -y
+	! dpkg -s python3-xcffib >/dev/null 2>&1 && sudo apt install python3-xcffib -y
+	! dpkg -s python3-cairocffi >/dev/null 2>&1 && sudo apt install python3-cairocffi -y
 	! dpkg -s pipx >/dev/null 2>&1 && sudo apt install --no-install-recommends pipx -y
 
 	[[ ! -d "$HOME"/src ]] && mkdir "$HOME"/src
