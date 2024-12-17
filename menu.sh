@@ -392,6 +392,17 @@ function installQtile() {
 		sudo chmod 644 "$DESKTOPFILE"
 	fi
 }
+##--------------------------------------------------------------------------------------
+## Instalar o Hyperland
+##
+
+function installHyperland() {
+	[[ ! -d "$HOME"/src ]] && mkdir "$HOME"/src
+
+	git clone --recursive https://github.com/hyprwm/Hyprland "$HOME"/src
+	cd "$HOME"/src/Hyprland || exit 1
+	make all && sudo make install
+}
 
 ##--------------------------------------------------------------------------------------
 ## Instalar o AstroNvim
@@ -493,6 +504,7 @@ while true; do
 			"INSTALL_UTILITIES" "Instalar utilitários." ON \
 			"INSTALL_ACCESSORIES" "Instalar acessórios." ON \
 			"INSTALL_QTILE" "Instalar o Qtile." ON \
+			"INSTALL_HYPERLAND" "Instalar o Hyperland." ON \
 			"INSTALL_FISH_SHELL" "Instalar o Fish Shell." ON \
 			"INSTALL_DOT_FILES" "Instalar os 'dot-files' padrões." ON \
 			"INSTALL_TECH_SCI_SOFTWARE" "Instalar softwares técnicos ou científicos." ON \
@@ -569,6 +581,14 @@ while true; do
 
 	if [[ "${arraymenu[*]}" =~ 'INSTALL_QTILE' ]]; then
 		installQtile
+	fi
+
+	##--------------------------------------------------------------------------------------
+	## Instalar o Hyperland
+	##
+
+	if [[ "${arraymenu[*]}" =~ 'INSTALL_HYPERLAND' ]]; then
+		installHyperland
 	fi
 
 	##--------------------------------------------------------------------------------------
