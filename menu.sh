@@ -384,10 +384,17 @@ function installQtile() {
 ##
 
 function installAstroNvim() {
-	[[ -d "$HOME"/.config/nvim ]] && mv "$HOME"/.config/nvim ~/.config/nvim.bak
-	[[ -d "$HOME"/.local/share/nvim ]] && mv "$HOME"/.local/share/nvim ~/.local/share/nvim.bak
-	[[ -d "$HOME"/.local/state/nvim ]] && mv "$HOME"/.local/state/nvim ~/.local/state/nvim.bak
-	[[ -d "$HOME"/.cache/nvim ]] && mv "$HOME"/.cache/nvim ~/.cache/nvim.bak
+	# Remoe backups anteriores
+	[[ -d "$HOME"/.config/nvim.bak ]] && rm -rf "$HOME"/.config/nvim.bak
+	[[ -d "$HOME"/.local/share/nvim.bak ]] && rm -rf "$HOME"/.local/share/nvim.bak
+	[[ -d "$HOME"/.local/state/nvim.bak ]] && rm -rf "$HOME"/.local/state/nvim.bak
+	[[ -d "$HOME"/.cache/nvim.bak ]] && rm -rf "$HOME"/.cache/nvim.bak
+
+	# Faz backup das configurações atuais
+	[[ -d "$HOME"/.config/nvim ]] && mv "$HOME"/.config/nvim "$HOME"/.config/nvim.bak
+	[[ -d "$HOME"/.local/share/nvim ]] && mv "$HOME"/.local/share/nvim "$HOME"/.local/share/nvim.bak
+	[[ -d "$HOME"/.local/state/nvim ]] && mv "$HOME"/.local/state/nvim "$HOME"/.local/state/nvim.bak
+	[[ -d "$HOME"/.cache/nvim ]] && mv "$HOME"/.cache/nvim "$HOME"/.cache/nvim.bak
 
 	[[ -d "$HOME"/src/neovim ]] && rm -rf "$HOME"/src/neovim
 
