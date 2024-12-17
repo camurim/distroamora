@@ -322,8 +322,10 @@ function installQtile() {
 	ninja -C build
 	sudo ninja -C build install
 
-	pipx install qtile
-	pipx inject qtile dbus-next psutil qtile-extras
+	if ! pipx list 2>&1 | grep -q qtile; then
+		pipx install qtile
+		pipx inject qtile dbus-next psutil qtile-extras
+	fi
 
 	if [ ! -f "$DESKTOPFILE" ]; then
 		cat >"$TMPFILE" <<-"EOF"
