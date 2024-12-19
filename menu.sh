@@ -572,6 +572,7 @@ while true; do
 			"INSTALL_DOT_FILES" "Instalar os 'dot-files' padrões." ON \
 			"INSTALL_TECH_SCI_SOFTWARE" "Instalar softwares técnicos ou científicos." ON \
 			"INSTALL_NVIDIA_DRIVER" "Instalar drivers da GPU NVidia." ON \
+			"UPGRADE_DEBIAN" "Upgrade do Debian para versão de testes." ON \
 			3>&2 2>&1 1>&3
 	)
 
@@ -684,5 +685,13 @@ while true; do
 
 	if [[ "${arraymenu[*]}" =~ 'INSTALL_NVIDIA_DRIVER' ]]; then
 		installNvidiaDriver
+	fi
+
+	##--------------------------------------------------------------------------------------
+	## Upgrade do Debian
+	##
+
+	if [[ "${arraymenu[*]}" =~ 'UPGRADE_DEBIAN' ]]; then
+		upgradeDebian
 	fi
 done
