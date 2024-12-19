@@ -330,7 +330,7 @@ function upgradeDebian() {
 	fi
 
 	sudo apt update && sudo apt dist-upgrade --autoremove -y
-	sudo sed -i "s/$CURRENT_VERSION/trixie/g" /etc/apt/sources.list
+	sudo sed -i "s/$CURRENT_VERSION/$TEST_VERSION/g" /etc/apt/sources.list
 	sudo find /etc/apt/sources.list.d -type f -exec sed -i "s/$CURRENT_VERSION/$TEST_VERSION/g" {} \;
 	sudo apt-get update && sudo apt-get dist-upgrade --autoremove -y
 	apt-get install linux-headers-"$(uname -r)" -y
