@@ -200,7 +200,6 @@ function installDevTools() {
 
 	if ! which nvm; then
 		curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-		source "$HOME"/.bashrc
 		nvm install 22
 	fi
 
@@ -315,6 +314,26 @@ function installFishShell() {
 		sudo apt update
 		sudo apt install fish -y
 	fi
+}
+
+##--------------------------------------------------------------------------------------
+## Upgrade Debian
+##
+
+function upgradeDebian() {
+	CURRENT_VERSION="$(grep 'VERSION_CODENAME' /etc/os-release | awk -F'=' '{print $1}')"
+	TEST_VERSION='trixie'
+	if ! whiptail --title "$title" --yesno "Este processo irá promover o upgrade da versão $CURRENT_VERSION para $TEST_VERSION (em teste). \
+		Todo o proceso deve demorar vários minutos. Deseja continuar?" 10 78; then
+		echo "Até a próxima!"
+		exit 1
+	fi
+
+	sudo apt update && sudo apt dist-upgrade --autoremove -y
+	sudo sed -i "s/$CURRENT_VERSION/trixie/g" /etc/apt/sources.list
+	sudo find /etc/apt/sources.list.d -type f -exec sed -i "s/$CURRENT_VERSION/$TEST_VERSION/g" {} \;
+	sudo apt-get update && sudo apt-get dist-upgrade --autoremove -y
+	apt-get install linux-headers-"$(uname -r)" -y
 }
 
 ##--------------------------------------------------------------------------------------
@@ -440,7 +459,7 @@ function installHyperland() {
 	! dpkg -s xdg-desktop-portal-wlr >/dev/null 2>&1 && sudo apt install xdg-desktop-portal-wlr -y
 	! dpkg -s libudis86-0 >/dev/null 2>&1 && sudo apt install libudis86-0 -y
 	! dpkg -s libudis86-dev >/dev/null 2>&1 && sudo apt install libudis86-dev -y
-	
+
 	[[ ! -d "$HOME"/src ]] && mkdir "$HOME"/src
 
 	git clone --recursive https://github.com/hyprwm/Hyprland "$HOME"/src
