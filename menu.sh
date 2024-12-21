@@ -203,6 +203,11 @@ function installDevTools() {
 		nvm install 22
 	fi
 
+    if ! which go; then
+        wget --continue https://go.dev/dl/go1.23.4.linux-amd64.tar.gz
+        sudo tar -c /usr/local -xzf https://go.dev/dl/go1.23.4.linux-amd64.tar.gz
+    fi
+
 }
 
 ##--------------------------------------------------------------------------------------
@@ -484,13 +489,16 @@ function installAstroNvim() {
 	[[ -d "$HOME"/.local/state/nvim ]] && mv "$HOME"/.local/state/nvim "$HOME"/.local/state/nvim.bak
 	[[ -d "$HOME"/.cache/nvim ]] && mv "$HOME"/.cache/nvim "$HOME"/.cache/nvim.bak
 
-	[[ -d "$HOME"/src/neovim ]] && rm -rf "$HOME"/src/neovim
+    read -p "Install new version of Neovim? (Y/N): " confirm
+		if [[ $confirm == [yY] ]]; then
+            [[ -d "$HOME"/src/neovim ]] && rm -rf "$HOME"/src/neovim
 
-	git clone https://github.com/neovim/neovim "$HOME"/src/neovim
-	cd "$HOME"/src/neovim || return 1
-	make CMAKE_BUILD_TYPE=Release
-	sudo make install
-	sudo ln -s /usr/local/bin/nvim /usr/bin/nvim
+            git clone https://github.com/neovim/neovim "$HOME"/src/neovim
+            cd "$HOME"/src/neovim || return 1
+            make CMAKE_BUILD_TYPE=Release
+            sudo make install
+            sudo ln -s /usr/local/bin/nvim /usr/bin/nvim
+        fi
 
 	git clone --depth 1 https://github.com/AstroNvim/template "$HOME"/.config/nvim
 	rm -rf "$HOME"/.config/nvim/.git
